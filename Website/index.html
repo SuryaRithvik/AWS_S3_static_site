@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alex Carter — Cloud & DevOps Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --surface: #eeecea;
+      --border: #d8d5d0;
+      --text: #1a1917;
+      --muted: #7a7670;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --green: #16a34a;
+      --green-soft: #dcfce7;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(245,244,240,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 56px;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    nav ul {
+      list-style: none;
+      display: flex; gap: 2rem;
+    }
+    nav ul a {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--text); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 3rem);
+    }
+    section { padding: 5rem 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: calc(56px + 5rem);
+      padding-bottom: 5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: end;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+      animation-delay: 0.1s;
+    }
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    h1 strong { font-weight: 500; }
+    .hero-sub {
+      margin-top: 1.4rem;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 480px;
+      font-weight: 300;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem;
+      margin-top: 2.4rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.4rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      border: 1px solid var(--text);
+    }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--text); }
+
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      text-align: right;
+    }
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* ── SKILLS ── */
+    #skills h2, #projects h2, #experience h2, #contact h2 {
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    #skills h2::after, #projects h2::after,
+    #experience h2::after, #contact h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .skill-card {
+      background: var(--bg);
+      padding: 1.6rem;
+      transition: background 0.2s;
+    }
+    .skill-card:hover { background: var(--surface); }
+    .skill-icon {
+      width: 32px; height: 32px;
+      background: var(--surface);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      margin-bottom: 1rem;
+    }
+    .skill-card h3 {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 0.25rem 0.6rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .tag.blue { background: var(--accent-soft); color: var(--accent); border-color: #bfdbfe; }
+    .tag.green { background: var(--green-soft); color: var(--green); border-color: #bbf7d0; }
+
+    /* ── PROJECTS ── */
+    .projects-list {
+      display: flex; flex-direction: column; gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .project-item {
+      background: var(--bg);
+      padding: 1.8rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .project-item:hover { background: var(--surface); }
+    .project-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--border);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .project-item h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .project-item p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 540px;
+    }
+    .project-meta {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-end;
+    }
+    .project-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      letter-spacing: 0.06em;
+    }
+    .status-live { background: var(--green-soft); color: var(--green); }
+    .status-oss { background: var(--accent-soft); color: var(--accent); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 2.4rem; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .exp-item:nth-child(1) { animation-delay: 0.1s; }
+    .exp-item:nth-child(2) { animation-delay: 0.2s; }
+    .exp-item:nth-child(3) { animation-delay: 0.3s; }
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      padding-top: 0.2rem;
+    }
+    .exp-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .exp-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .exp-item + .exp-item {
+      padding-top: 2.4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── CONTACT ── */
+    #contact .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-intro h3 {
+      font-size: 1.6rem;
+      font-weight: 300;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .contact-intro p {
+      color: var(--muted);
+      font-weight: 300;
+      font-size: 0.9rem;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding-top: 2rem;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+      background: var(--bg);
+    }
+    .contact-link:hover {
+      border-color: var(--text);
+      background: var(--surface);
+    }
+    .contact-link-icon {
+      font-size: 16px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border-radius: 4px;
+    }
+    .contact-link-text { flex: 1; }
+    .contact-link-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .contact-link-value {
+      font-size: 0.85rem;
+      font-weight: 400;
+      margin-top: 0.1rem;
+    }
+    .contact-link-arrow {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .footer-dot { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Staggered section entry */
+    .animate { opacity: 0; animation: fadeUp 0.5s ease forwards; }
+    .d1 { animation-delay: 0.05s; }
+    .d2 { animation-delay: 0.15s; }
+    .d3 { animation-delay: 0.25s; }
+    .d4 { animation-delay: 0.35s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: row; text-align: left; margin-top: 2rem; }
+      #contact .container { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      .project-item { grid-template-columns: 1fr; }
+      .project-meta { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">AC<span>.</span></a>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="container">
+    <section id="hero">
+      <div>
+        <div class="hero-tag">Cloud &amp; DevOps Engineer</div>
+        <h1>Building infrastructure<br><strong>that scales.</strong></h1>
+        <p class="hero-sub">
+          I design and operate cloud-native systems — automating delivery pipelines,
+          hardening reliability, and turning complexity into clean, reproducible infrastructure.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View Projects →</a>
+          <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Systems Deployed</div>
+        </div>
+        <div>
+          <div class="stat-num">99.9%</div>
+          <div class="stat-label">Avg. Uptime SLA</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="container">
+    <section id="skills">
+      <h2>Core Skills</h2>
+      <div class="skills-grid">
+
+        <div class="skill-card animate d1">
+          <div class="skill-icon">☁️</div>
+          <h3>Cloud Platforms</h3>
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;">Multi-cloud architecture design and cost optimization across major providers.</p>
+          <div class="skill-tags">
+            <span class="tag blue">AWS</span>
+            <span class="tag blue">GCP</span>
+            <span class="tag blue">Azure</span>
+          </div>
+        </div>
+
+        <div class="skill-card animate d2">
+          <div class="skill-icon">🔁</div>
+          <h3>CI/CD & Automation</h3>
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;">End-to-end delivery pipelines from commit to production with zero-downtime deploys.</p>
+          <div class="skill-tags">
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">GitLab CI</span>
+            <span class="tag">ArgoCD</span>
+            <span class="tag">Jenkins</span>
+          </div>
+        </div>
+
+        <div class="skill-card animate d3">
+          <div class="skill-icon">📦</div>
+          <h3>Containers & Orchestration</h3>
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;">Container lifecycle management and production-grade Kubernetes cluster operations.</p>
+          <div class="skill-tags">
+            <span class="tag green">Kubernetes</span>
+            <span class="tag green">Docker</span>
+            <span class="tag green">Helm</span>
+          </div>
+        </div>
+
+        <div class="skill-card animate d1">
+          <div class="skill-icon">🏗️</div>
+          <h3>Infrastructure as Code</h3>
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;">Declarative, version-controlled infrastructure with drift detection and policy enforcement.</p>
+          <div class="skill-tags">
+            <span class="tag">Terraform</span>
+            <span class="tag">Ansible</span>
+            <span class="tag">Pulumi</span>
+          </div>
+        </div>
+
+        <div class="skill-card animate d2">
+          <div class="skill-icon">📊</div>
+          <h3>Observability</h3>
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;">Full-stack monitoring, structured logging, and on-call runbooks that actually work.</p>
+          <div class="skill-tags">
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Datadog</span>
+            <span class="tag">OpenTelemetry</span>
+          </div>
+        </div>
+
+        <div class="skill-card animate d3">
+          <div class="skill-icon">🔒</div>
+          <h3>Security & Compliance</h3>
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;">Shift-left security, secrets management, and SOC 2 / CIS benchmark alignment.</p>
+          <div class="skill-tags">
+            <span class="tag">Vault</span>
+            <span class="tag">OPA</span>
+            <span class="tag">Trivy</span>
+            <span class="tag">SOPS</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="container">
+    <section id="projects">
+      <h2>Featured Projects</h2>
+      <div class="projects-list">
+
+        <div class="project-item">
+          <div>
+            <div class="project-num">01</div>
+            <h3>Zero-Downtime Multi-Region Migration</h3>
+            <p>Migrated a monolithic e-commerce platform to a multi-region AWS architecture using blue/green deployments and Route 53 latency routing — reducing p99 latency by 60% and achieving zero downtime during cutover.</p>
+            <div class="skill-tags" style="margin-top:0.8rem;">
+              <span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">ECS</span><span class="tag">Route 53</span>
+            </div>
+          </div>
+          <div class="project-meta">
+            <span class="project-status status-live">● Live</span>
+          </div>
+        </div>
+
+        <div class="project-item">
+          <div>
+            <div class="project-num">02</div>
+            <h3>Internal Developer Platform</h3>
+            <p>Built a self-service IDP on top of Backstage and Kubernetes, cutting average environment provisioning time from 3 days to under 8 minutes. Adopted by 5 engineering teams across 3 product lines.</p>
+            <div class="skill-tags" style="margin-top:0.8rem;">
+              <span class="tag">Kubernetes</span><span class="tag">Backstage</span><span class="tag">ArgoCD</span><span class="tag">Crossplane</span>
+            </div>
+          </div>
+          <div class="project-meta">
+            <span class="project-status status-live">● Live</span>
+          </div>
+        </div>
+
+        <div class="project-item">
+          <div>
+            <div class="project-num">03</div>
+            <h3>GitOps Pipeline Starter Kit</h3>
+            <p>Open-source Terraform + ArgoCD template repository for bootstrapping production-ready GitOps workflows on EKS. Includes RBAC, secrets management, and observability stack out of the box.</p>
+            <div class="skill-tags" style="margin-top:0.8rem;">
+              <span class="tag">Terraform</span><span class="tag">ArgoCD</span><span class="tag">EKS</span><span class="tag">Vault</span>
+            </div>
+          </div>
+          <div class="project-meta">
+            <span class="project-status status-oss">⬡ Open Source</span>
+          </div>
+        </div>
+
+        <div class="project-item">
+          <div>
+            <div class="project-num">04</div>
+            <h3>FinOps Cost Visibility Dashboard</h3>
+            <p>Grafana-based dashboard pulling AWS Cost Explorer + GCP Billing data into a unified view. Enabled engineering teams to self-serve cost attribution, reducing monthly cloud spend by 22%.</p>
+            <div class="skill-tags" style="margin-top:0.8rem;">
+              <span class="tag">Grafana</span><span class="tag">Python</span><span class="tag">AWS Cost Explorer</span><span class="tag">BigQuery</span>
+            </div>
+          </div>
+          <div class="project-meta">
+            <span class="project-status status-oss">⬡ Open Source</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="container">
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="exp-list">
+
+        <div class="exp-item">
+          <div class="exp-period">2022 — Present</div>
+          <div>
+            <div class="exp-title">Senior Cloud & DevOps Engineer</div>
+            <div class="exp-company">Cloudform Systems</div>
+            <p class="exp-desc">
+              Lead cloud infrastructure design for SaaS products serving 2M+ users.
+              Own reliability engineering (SLOs, error budgets, incident response) and
+              drive platform engineering initiatives across 12-person eng org.
+            </p>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-period">2020 — 2022</div>
+          <div>
+            <div class="exp-title">DevOps Engineer</div>
+            <div class="exp-company">Nexio Health</div>
+            <p class="exp-desc">
+              Built and maintained HIPAA-compliant AWS infrastructure for a telemedicine
+              platform. Reduced deployment frequency from bi-weekly to on-demand while
+              meeting strict compliance requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-period">2018 — 2020</div>
+          <div>
+            <div class="exp-title">Infrastructure Engineer</div>
+            <div class="exp-company">Stackbit Agency</div>
+            <p class="exp-desc">
+              Maintained on-prem to cloud migration projects for enterprise clients.
+              Automated server provisioning with Ansible and introduced container-first
+              workflows across 8 client environments.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-intro">
+        <h2>Contact</h2>
+        <h3>Let's build something<br>reliable together.</h3>
+        <p>Open to senior roles, consulting engagements, and interesting open-source collaborations.</p>
+      </div>
+      <div>
+        <div class="contact-links">
+          <a href="mailto:alex@example.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">alex@example.com</div>
+            </div>
+            <span class="contact-link-arrow">↗</span>
+          </a>
+          <a href="https://linkedin.com" target="_blank" class="contact-link">
+            <div class="contact-link-icon">💼</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-value">/in/alexcarter</div>
+            </div>
+            <span class="contact-link-arrow">↗</span>
+          </a>
+          <a href="https://github.com" target="_blank" class="contact-link">
+            <div class="contact-link-icon">🐙</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">GitHub</div>
+              <div class="contact-link-value">github.com/alexcarter</div>
+            </div>
+            <span class="contact-link-arrow">↗</span>
+          </a>
+          <a href="#" class="contact-link">
+            <div class="contact-link-icon">📄</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">Resume</div>
+              <div class="contact-link-value">Download PDF</div>
+            </div>
+            <span class="contact-link-arrow">↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Alex Carter <span class="footer-dot">·</span> Cloud &amp; DevOps Engineer</p>
+      <p>Built with HTML <span class="footer-dot">·</span> No frameworks. No fuss.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.animation = 'fadeUp 0.5s ease forwards';
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.skill-card, .project-item, .exp-item').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
