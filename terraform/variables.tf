@@ -1,3 +1,3 @@
 variable "bucket_name" {
-  default = "Static_site23052026"
+  default = "static-site23052026"
 }
