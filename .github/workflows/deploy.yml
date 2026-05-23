@@ -38,9 +38,10 @@ jobs:
         working-directory: terraform
         run: terraform validate
 
-        name: Terraform Import Existing Bucket
+      - name: Terraform Import Existing Bucket
         working-directory: terraform
-        run: terraform import aws_s3_bucket.website_bucket static-site23052026 || true
+        run: |
+           terraform import aws_s3_bucket.website_bucket static-site23052026 || true
 
 
 
