@@ -50,4 +50,4 @@ jobs:
 
       # Step 8 - Upload Website Files to S3
       - name: Upload Website Files
-        run: aws s3 sync website/ s3://static-site23052026
+        run: aws s3 sync Website/ s3://static-site23052026
