@@ -1,3 +1,3 @@
-variable"bucket_name"{
-    default="DevOps-site1"
+variable "bucket_name" {
+  default = "Static_site23052026"
 }
