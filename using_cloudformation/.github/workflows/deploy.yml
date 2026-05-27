@@ -24,10 +24,10 @@ jobs:
       - name: Deploy CloudFormation Stack
         run: |
           aws cloudformation deploy \
-            --template-file CFT\main.yml \
+            --template-file using_cloudformation/CFT/main.yml \
             --stack-name static-website-stack \
             --capabilities CAPABILITY_NAMED_IAM
 
       - name: Upload Website Files
         run: |
-          aws s3 sync website/ s3://devops-static-site-2026
+          aws s3 sync using_cloudformation/website/ s3://devops-static-site-2026
