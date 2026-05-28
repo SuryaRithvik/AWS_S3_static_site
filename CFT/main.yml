@@ -23,4 +23,5 @@ Resources:
           - Effect: Allow
             Principal: "*"
             Action: s3:PutObject
+            Action: s3:GetObject
             Resource: !Sub arn:aws:s3:::${StaticWebsiteBucket}/*
