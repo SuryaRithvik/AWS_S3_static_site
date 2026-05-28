@@ -5,7 +5,7 @@ Resources:
   StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: pipeline_CFT-static-site-2026
+      BucketName: pipeline-CFT-static-site-2026
       WebsiteConfiguration:
         IndexDocument: index.html
 
