@@ -8,6 +8,15 @@ Resources:
       BucketName: pipeline-cft-static-site-2026
       WebsiteConfiguration:
         IndexDocument: index.html
+        
+    BucketPublicAccessBlock:
+      Type: AWS::S3::AccountPublicAccessBlock
+      Properties:
+        AccountId: !Ref AWS::AccountId
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
